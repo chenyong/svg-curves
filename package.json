@@ -1,0 +1,31 @@
+{
+  "name": "coworkflow",
+  "version": "0.1.0",
+  "description": "CoWorkflow",
+  "main": "index.js",
+  "scripts": {
+    "cdn": "rsync -avr --progress dist/* tiye.me:cdn/svg-curves",
+    "tiye": "rsync -avr --progress dist/{index.html,manifest.json} tiye.me:repo/chenyong/svg-curves/",
+    "upload": "yarn cdn && yarn tiye",
+    "release": "shadow-cljs release browser",
+    "watch": "shadow-cljs watch browser",
+    "compile-ssr": "shadow-cljs compile ssr",
+    "html-dev": "env=dev node target/ssr.js && cp entry/manifest.json target/",
+    "html": "node target/ssr.js && cp entry/manifest.json dist/",
+    "index.html": "yarn compile-ssr && yarn html-dev",
+    "del": "rm -rf dist/*",
+    "serve": "http-server dist -s",
+    "build": "yarn del && yarn release && yarn compile-ssr && yarn html",
+    "build2": "shadow-cljs clj-run build.release/-main"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mvc-works/coworkflow.git"
+  },
+  "author": "jiyinyiyong",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^0.11.1",
+    "shadow-cljs": "^2.0.131"
+  }
+}
